@@ -1,0 +1,17 @@
+{% extends 'booking/base.html' %}
+{% block title %}Leave a Review — Learny{% endblock %}
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-md-6">
+    <div class="card p-4">
+      <h1 class="h4 mb-3">Review {{ booking.teacher.user.get_full_name|default:booking.teacher.user.username }}</h1>
+      <p class="text-muted">Lesson for {{ booking.child.full_name }} on {{ booking.lesson_date }}</p>
+      <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary w-100 mt-3">Submit Review</button>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

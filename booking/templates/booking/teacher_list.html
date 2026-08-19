@@ -1,0 +1,52 @@
+{% extends 'booking/base.html' %}
+{% load design_extras %}
+{% block title %}Find a Teacher — Learny{% endblock %}
+{% block content %}
+<h1 class="h3 mb-1">Find a Teacher</h1>
+<p class="text-muted mb-4">Search by name, or narrow it down by subject.</p>
+
+<form method="get" class="row g-2 mb-4">
+  <div class="col-md-4">
+    <input type="text" name="q" value="{{ query }}" class="form-control" placeholder="Search by name or keyword">
+  </div>
+  <div class="col-md-4">
+    <select name="subject" class="form-select">
+      <option value="">All subjects</option>
+      {% for value, label in subjects %}
+        <option value="{{ value }}" {% if value == selected_subject %}selected{% endif %}>{{ label }}</option>
+      {% endfor %}
+    </select>
+  </div>
+  <div class="col-md-2">
+    <button type="submit" class="btn btn-primary w-100">Search</button>
+  </div>
+</form>
+
+<div class="row g-4">
+  {% for teacher in teachers %}
+    <div class="col-md-4">
+      <div class="card teacher-card h-100 p-3" data-group="{{ teacher.subject|subject_group }}">
+        {% if teacher.is_verified %}
+          <div class="verified-stamp"><span>&#10003;</span><span>Verified</span></div>
+        {% endif %}
+        <h5>{{ teacher.user.get_full_name|default:teacher.user.username }}</h5>
+        <span class="badge badge-subject mb-2">{{ teacher.get_subject_display }}</span>
+        <p class="text-muted small">{{ teacher.headline }}</p>
+        <p class="mb-1">
+          {% if teacher.average_rating %}
+            &#9733; {{ teacher.average_rating }} ({{ teacher.review_count }} reviews)
+          {% else %}
+            <span class="text-muted">No reviews yet</span>
+          {% endif %}
+        </p>
+        <p class="rate-tag">${{ teacher.hourly_rate }}/hr</p>
+        <a href="{% url 'teacher_detail' teacher.pk %}" class="btn btn-sm btn-outline-primary mt-auto">View profile</a>
+      </div>
+    </div>
+  {% empty %}
+    <div class="col-12">
+      <div class="empty-state">No teachers match your search. Try a different subject or keyword.</div>
+    </div>
+  {% endfor %}
+</div>
+{% endblock %}

@@ -1,0 +1,59 @@
+{% extends 'booking/base.html' %}
+{% load design_extras %}
+{% block title %}{{ teacher.user.get_full_name }} — Learny{% endblock %}
+{% block content %}
+<div class="row g-4">
+  <div class="col-md-8">
+    <div class="card p-4" data-group="{{ teacher.subject|subject_group }}">
+      <h1 class="h3">{{ teacher.user.get_full_name|default:teacher.user.username }}</h1>
+      <span class="badge badge-subject mb-2">{{ teacher.get_subject_display }}</span>
+      {% if not teacher.is_verified %}
+        <span class="badge-pending-verification">Pending verification &mdash; not yet publicly visible</span>
+      {% endif %}
+      <p class="lead mt-2">{{ teacher.headline }}</p>
+      <p>{{ teacher.bio|linebreaks }}</p>
+      <ul class="list-unstyled text-muted">
+        <li>Experience: {{ teacher.years_experience }} years</li>
+        <li>Ages taught: {{ teacher.min_student_age }}&ndash;{{ teacher.max_student_age }}</li>
+        <li>Rate: <span class="rate-tag">${{ teacher.hourly_rate }}/hour</span></li>
+      </ul>
+
+      <h2 class="h5 mt-4">Weekly availability</h2>
+      <ul>
+        {% for slot in availabilities %}
+          <li>{{ slot.get_day_of_week_display }}: {{ slot.start_time|time:"g:i A" }} &ndash; {{ slot.end_time|time:"g:i A" }}</li>
+        {% empty %}
+          <li class="text-muted">No availability posted yet.</li>
+        {% endfor %}
+      </ul>
+
+      <h2 class="h5 mt-4">Reviews</h2>
+      {% for review in reviews %}
+        <div class="border-bottom py-2">
+          <span class="fw-bold">{{ review.rating }}/5 &#9733;</span>
+          <p class="mb-0">{{ review.comment }}</p>
+          <small class="text-muted">{{ review.parent.first_name }} &mdash; {{ review.created_at|date:"M Y" }}</small>
+        </div>
+      {% empty %}
+        <p class="text-muted">No reviews yet.</p>
+      {% endfor %}
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="card p-4 text-center" data-group="{{ teacher.subject|subject_group }}">
+      {% if teacher.is_verified %}
+        <div class="verified-stamp"><span>&#10003;</span><span>Verified</span></div>
+      {% endif %}
+      {% if teacher.photo %}
+        <img src="{{ teacher.photo.url }}" class="rounded-circle mb-3" style="width:120px;height:120px;object-fit:cover;margin:0 auto;">
+      {% endif %}
+      <h3 class="h4 rate-tag">${{ teacher.hourly_rate }}/hr</h3>
+      {% if user.is_authenticated and user.is_parent and teacher.is_verified %}
+        <a href="{% url 'book_teacher' teacher.pk %}" class="btn btn-primary mt-2">Request a Lesson</a>
+      {% elif not user.is_authenticated %}
+        <a href="{% url 'login' %}" class="btn btn-primary mt-2">Log in to book</a>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,54 @@
+{% extends 'booking/base.html' %}
+{% block title %}My Dashboard — Learny{% endblock %}
+{% block content %}
+<h1 class="h3 mb-4">Welcome back, {{ user.first_name|default:user.username }}</h1>
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h2 class="h5 mb-0">My Children</h2>
+  <a href="{% url 'child_add' %}" class="btn btn-sm btn-outline-primary">+ Add Child</a>
+</div>
+<div class="row g-3 mb-4">
+  {% for child in children %}
+    <div class="col-md-4">
+      <div class="card p-3">
+        <strong>{{ child.full_name }}</strong>
+        <span class="text-muted small">Age {{ child.age }}</span>
+        {% if child.notes %}<p class="small text-muted mb-0 mt-1">{{ child.notes }}</p>{% endif %}
+      </div>
+    </div>
+  {% empty %}
+    <div class="col-12">
+      <div class="empty-state">No children added yet &mdash; add one to start booking lessons.</div>
+    </div>
+  {% endfor %}
+</div>
+
+<h2 class="h5 mb-3">My Bookings</h2>
+<div class="table-responsive">
+<table class="table">
+  <thead><tr><th>Child</th><th>Teacher</th><th>Date</th><th>Status</th><th></th></tr></thead>
+  <tbody>
+    {% for booking in bookings %}
+      <tr>
+        <td>{{ booking.child.full_name }}</td>
+        <td><a href="{% url 'teacher_detail' booking.teacher.pk %}">{{ booking.teacher.user.get_full_name|default:booking.teacher.user.username }}</a></td>
+        <td>{{ booking.lesson_date }}</td>
+        <td><span class="badge bg-secondary">{{ booking.get_status_display }}</span></td>
+        <td>
+          {% if booking.status == 'pending' or booking.status == 'confirmed' %}
+            <form method="post" action="{% url 'cancel_booking' booking.pk %}" class="d-inline">
+              {% csrf_token %}
+              <button class="btn btn-sm btn-outline-danger">Cancel</button>
+            </form>
+          {% elif booking.can_be_reviewed %}
+            <a href="{% url 'leave_review' booking.pk %}" class="btn btn-sm btn-outline-success">Leave Review</a>
+          {% endif %}
+        </td>
+      </tr>
+    {% empty %}
+      <tr><td colspan="5"><div class="empty-state border-0 shadow-none py-3">No bookings yet. <a href="{% url 'teacher_list' %}">Find a teacher</a> to get started.</div></td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+</div>
+{% endblock %}

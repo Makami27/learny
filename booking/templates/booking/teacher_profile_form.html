@@ -1,0 +1,16 @@
+{% extends 'booking/base.html' %}
+{% block title %}Teacher Profile — Learny{% endblock %}
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-md-7">
+    <div class="card p-4">
+      <h1 class="h4 mb-3">Your Teacher Profile</h1>
+      <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary w-100 mt-3">Save Profile</button>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

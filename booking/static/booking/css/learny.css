@@ -1,0 +1,443 @@
+/* ==========================================================================
+   Learny design system
+   A lesson-planner aesthetic: cool paper, ink navy, marker-gold accent,
+   and a verification "stamp" as the signature trust device.
+   ========================================================================== */
+
+:root {
+  --ink: #17213B;
+  --ink-soft: #4B5875;
+  --ink-faint: #8B93A7;
+  --paper: #F3F5F3;
+  --paper-deep: #E9ECE8;
+  --card: #FFFFFF;
+  --line: #DADFDA;
+
+  --gold: #E7A233;
+  --gold-deep: #C3831F;
+  --gold-tint: #FBF0DA;
+
+  --sage: #4C8967;
+  --sage-tint: #E1EEE5;
+
+  --plum: #A0568A;
+  --plum-tint: #F4E9F1;
+
+  --slate: #5B7280;
+  --slate-tint: #E7ECEC;
+
+  --brick: #BD5240;
+  --brick-tint: #F6E4E0;
+
+  --blue: #3C5AA6;
+  --blue-tint: #E7EBF6;
+
+  --radius: 10px;
+  --radius-lg: 18px;
+  --shadow-card: 0 1px 2px rgba(23, 33, 59, 0.04), 0 8px 24px rgba(23, 33, 59, 0.06);
+}
+
+/* -------------------------------------------------------------------- */
+/* Base                                                                  */
+/* -------------------------------------------------------------------- */
+
+body {
+  background-color: var(--paper);
+  color: var(--ink);
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 0.98rem;
+}
+
+h1, h2, h3, h4, h5, h6,
+.display-6 {
+  font-family: "Bricolage Grotesque", "Inter", sans-serif;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+}
+
+h1, .h3, .display-6 { font-weight: 700; }
+h2, .h4, .h5 { font-weight: 600; }
+
+a { color: var(--ink); }
+a:hover { color: var(--gold-deep); }
+
+.text-muted { color: var(--ink-faint) !important; }
+
+.small, small { font-family: "IBM Plex Mono", ui-monospace, monospace; letter-spacing: 0; }
+
+::selection { background: var(--gold-tint); color: var(--ink); }
+
+/* -------------------------------------------------------------------- */
+/* Navbar — a binder tab, not a generic app bar                         */
+/* -------------------------------------------------------------------- */
+
+.navbar {
+  background: var(--card) !important;
+  border-bottom: 2px solid var(--ink) !important;
+  padding-top: 0.85rem;
+  padding-bottom: 0.85rem;
+}
+
+.navbar-brand {
+  font-family: "Bricolage Grotesque", sans-serif;
+  font-weight: 800 !important;
+  color: var(--ink) !important;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.35rem;
+}
+
+.navbar-brand .brand-mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  background: var(--gold);
+  color: var(--ink);
+  border-radius: 8px;
+  font-size: 1rem;
+  transform: rotate(-6deg);
+}
+
+.navbar-nav .nav-link {
+  color: var(--ink-soft);
+  font-weight: 500;
+  border-bottom: 2px solid transparent;
+  margin: 0 0.15rem;
+}
+
+.navbar-nav .nav-link:hover {
+  color: var(--ink);
+  border-bottom-color: var(--gold);
+}
+
+/* -------------------------------------------------------------------- */
+/* Buttons                                                               */
+/* -------------------------------------------------------------------- */
+
+.btn {
+  border-radius: var(--radius);
+  font-weight: 600;
+  font-size: 0.92rem;
+  padding: 0.55rem 1.15rem;
+  border-width: 1.5px;
+}
+
+.btn-primary {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: #fff;
+}
+.btn-primary:hover, .btn-primary:focus {
+  background: var(--gold-deep);
+  border-color: var(--gold-deep);
+  color: #fff;
+}
+
+.btn-outline-primary {
+  color: var(--ink);
+  border-color: var(--ink);
+  background: transparent;
+}
+.btn-outline-primary:hover {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: #fff;
+}
+
+.btn-outline-secondary {
+  color: var(--ink-soft);
+  border-color: var(--line);
+}
+.btn-outline-secondary:hover {
+  background: var(--paper-deep);
+  border-color: var(--ink-faint);
+  color: var(--ink);
+}
+
+.btn-outline-danger {
+  color: var(--brick);
+  border-color: var(--brick);
+}
+.btn-outline-danger:hover {
+  background: var(--brick);
+  border-color: var(--brick);
+}
+
+.btn-outline-success {
+  color: var(--sage);
+  border-color: var(--sage);
+}
+.btn-outline-success:hover {
+  background: var(--sage);
+  border-color: var(--sage);
+}
+
+.btn-lg { padding: 0.75rem 1.5rem; font-size: 1rem; }
+.btn-sm { padding: 0.35rem 0.75rem; font-size: 0.82rem; }
+
+.btn-link.nav-link { text-decoration: none; font-weight: 500; }
+
+/* -------------------------------------------------------------------- */
+/* Cards — index-card treatment                                         */
+/* -------------------------------------------------------------------- */
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+}
+
+/* Teacher / listing cards get a subject-colored top edge */
+.teacher-card {
+  position: relative;
+  overflow: visible;
+  border-top: 4px solid var(--ink);
+  padding-top: 1.4rem !important;
+}
+.teacher-card[data-group="music"] { border-top-color: var(--gold); }
+.teacher-card[data-group="academic"] { border-top-color: var(--blue); }
+.teacher-card[data-group="art"] { border-top-color: var(--plum); }
+.teacher-card[data-group="skills"] { border-top-color: var(--sage); }
+.teacher-card[data-group="other"] { border-top-color: var(--slate); }
+
+.teacher-card h5 { margin-bottom: 0.35rem; }
+
+/* -------------------------------------------------------------------- */
+/* Subject badges — color encodes the category                          */
+/* -------------------------------------------------------------------- */
+
+.badge-subject {
+  font-family: "IBM Plex Mono", monospace;
+  font-weight: 500;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 0.35em 0.6em;
+  border-radius: 6px;
+  background: var(--slate-tint);
+  color: var(--slate);
+}
+[data-group="music"] .badge-subject { background: var(--gold-tint); color: var(--gold-deep); }
+[data-group="academic"] .badge-subject { background: var(--blue-tint); color: var(--blue); }
+[data-group="art"] .badge-subject { background: var(--plum-tint); color: var(--plum); }
+[data-group="skills"] .badge-subject { background: var(--sage-tint); color: var(--sage); }
+[data-group="other"] .badge-subject { background: var(--slate-tint); color: var(--slate); }
+
+/* -------------------------------------------------------------------- */
+/* Verification stamp — the signature element                           */
+/* -------------------------------------------------------------------- */
+
+.verified-stamp {
+  position: absolute;
+  top: -14px;
+  right: -10px;
+  width: 62px;
+  height: 62px;
+  border-radius: 50%;
+  border: 2px dashed var(--sage);
+  background: var(--sage-tint);
+  color: var(--sage);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  transform: rotate(9deg);
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.55rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  line-height: 1.1;
+  text-align: center;
+  box-shadow: 0 3px 8px rgba(23, 33, 59, 0.1);
+}
+.verified-stamp span:first-child { font-size: 1.1rem; }
+
+.badge-pending-verification {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: var(--gold-tint);
+  color: var(--gold-deep);
+  border: 1px dashed var(--gold-deep);
+  border-radius: 6px;
+  padding: 0.3em 0.65em;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+/* -------------------------------------------------------------------- */
+/* Hero — ruled planner paper                                           */
+/* -------------------------------------------------------------------- */
+
+.hero-ruled {
+  position: relative;
+  background:
+    repeating-linear-gradient(
+      to bottom,
+      transparent 0,
+      transparent 38px,
+      var(--line) 38px,
+      var(--line) 39px
+    ),
+    var(--card);
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--gold);
+  border-radius: var(--radius-lg);
+  padding: 3rem 2.75rem !important;
+  box-shadow: var(--shadow-card);
+}
+
+.hero-ruled .eyebrow {
+  font-family: "IBM Plex Mono", monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.78rem;
+  color: var(--gold-deep);
+  font-weight: 600;
+}
+
+.hero-ruled h1 {
+  font-size: 2.5rem;
+  line-height: 1.15;
+  max-width: 16ch;
+}
+
+.hero-ruled .highlight {
+  background: linear-gradient(to top, var(--gold-tint) 45%, transparent 45%);
+  padding: 0 0.1em;
+}
+
+.hero-ruled .lead {
+  max-width: 46ch;
+  color: var(--ink-soft);
+}
+
+/* -------------------------------------------------------------------- */
+/* Forms                                                                 */
+/* -------------------------------------------------------------------- */
+
+label, .form-label {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.76rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--ink-soft);
+  font-weight: 600;
+  margin-top: 0.9rem;
+  margin-bottom: 0.3rem;
+  display: block;
+}
+
+.form-control, .form-select {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 0.55rem 0.8rem;
+  background: var(--paper);
+}
+.form-control:focus, .form-select:focus {
+  border-color: var(--gold-deep);
+  box-shadow: 0 0 0 3px var(--gold-tint);
+  background: #fff;
+}
+
+form p { margin-bottom: 0; }
+form p + p { margin-top: 0; }
+
+textarea.form-control { min-height: 100px; }
+
+/* -------------------------------------------------------------------- */
+/* Tables — grade-book styling                                          */
+/* -------------------------------------------------------------------- */
+
+.table {
+  background: var(--card);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+.table thead th {
+  font-family: "IBM Plex Mono", monospace;
+  text-transform: uppercase;
+  font-size: 0.72rem;
+  letter-spacing: 0.05em;
+  color: var(--ink-faint);
+  border-bottom: 2px solid var(--ink) !important;
+  font-weight: 600;
+  padding-top: 0.9rem;
+  padding-bottom: 0.9rem;
+}
+.table td {
+  vertical-align: middle;
+  border-bottom-color: var(--line);
+}
+.table tbody tr:hover { background: var(--paper); }
+
+/* Status chips inside tables */
+.badge.bg-secondary { background: var(--slate-tint) !important; color: var(--slate) !important; }
+tr:has(td .badge) .badge {
+  font-family: "IBM Plex Mono", monospace;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+}
+
+/* -------------------------------------------------------------------- */
+/* Alerts                                                                */
+/* -------------------------------------------------------------------- */
+
+.alert {
+  border-radius: var(--radius);
+  border: 1px solid var(--line);
+  font-size: 0.92rem;
+}
+.alert-success { background: var(--sage-tint); color: #2f5a41; border-color: var(--sage); }
+.alert-warning { background: var(--gold-tint); color: #7a5613; border-color: var(--gold); }
+.alert-danger  { background: var(--brick-tint); color: #7a2f22; border-color: var(--brick); }
+.alert-info    { background: var(--blue-tint); color: #23386e; border-color: var(--blue); }
+
+/* -------------------------------------------------------------------- */
+/* Footer                                                                */
+/* -------------------------------------------------------------------- */
+
+footer {
+  color: var(--ink-faint);
+  font-size: 0.85rem;
+  border-top: 1px solid var(--line);
+  margin-top: 2rem;
+}
+footer .footer-mark { color: var(--gold-deep); font-weight: 700; }
+
+/* -------------------------------------------------------------------- */
+/* Empty states                                                          */
+/* -------------------------------------------------------------------- */
+
+.empty-state {
+  text-align: center;
+  padding: 2.5rem 1rem;
+  color: var(--ink-faint);
+  border: 1px dashed var(--line);
+  border-radius: var(--radius-lg);
+  background: var(--card);
+}
+
+/* -------------------------------------------------------------------- */
+/* Misc utility                                                          */
+/* -------------------------------------------------------------------- */
+
+.rate-tag {
+  font-family: "IBM Plex Mono", monospace;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+@media (max-width: 767px) {
+  .hero-ruled h1 { font-size: 1.9rem; }
+  .hero-ruled { padding: 2rem 1.5rem !important; }
+}
