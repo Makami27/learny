@@ -6,11 +6,11 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep this secret in real deployments (use env vars)!
-SECRET_KEY = 'dev-insecure-key-change-me-before-deploying'
+SECRET_KEY = 'qwwerfgnm-iirkfoekokreok-2332mkmdskkmow-okokojuv'
 
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['giftee.pythonanywhere.com']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
